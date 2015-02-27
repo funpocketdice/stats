@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fun pockerdice project</title>
+
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-socket-io/socket.js"></script>
+	<script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+
+	<script src="js/main.js"></script>
+	<script src="js/socket.io.min.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+	<style type="text/css">
+		.top-buffer { margin-top: 50px; }
+	</style>
+
+</head>
+<body ng-app="project">
+	<div class="container" ng-controller="projectController">
+		<div class="page-header">
+		  <h1>Fun pocketdice stats <small>and other stuff</small></h1>
+		</div>
+		<div class="row">
+			<div class='col-md-12'>
+				<h4>Rolls online {{ rolls }}
+				<small ng-switch='showRollsGraph' ng-click='showRollsGraph = !showRollsGraph'>
+					(
+					<span ng-switch-when='true'>hide</span>
+					<span ng-switch-when='false'>show</span>
+					)
+				</small>
+				<small ng-click='chartConfig.series[0].data = []'ng-show="showRollsGraph">
+					(clear)
+				</small>
+				</h4>
+				<highchart config="chartConfig" ng-show='showRollsGraph'></highchart>
+			</div>
+		</div>
+
+		<div class="row top-buffer">
+			<div class='col-md-3'>
+				<h4>Total wagered</h4>
+				<div class='well'>{{ wagered | number:5 }} mBTC</div>
+			</div>
+			<div class='col-md-3'>
+				<h4>Total payout</h4>
+				<div class='well'>{{ payout | number:5 }} mBTC</div>
+			</div>
+			<div class='col-md-3'>
+				<h4 ng-class='{"bg-success": wins >= loses, "bg-danger": wins < loses }'>Wins / loses</h4>
+				<div class='well'>
+					<span class='text-success'>{{ wins }}</span>
+					/
+					<span class='text-danger'>{{ loses }}</span>
+					times
+				</div>
+			</div>
+			<div class='col-md-3'>
+				<h4>Sum of rolled dices</h4>
+				<div class='well'>{{ dices }}</div>
+			</div>
+		</div>
+
+		<div class='row top-buffer'>
+			<div class='col-md-12'>
+				<table class='table'>
+					<caption>Maximum values</caption>
+					<tr>
+						<td>Max</td>
+						<th>bet, mBTC</th>
+						<th>payout, mBTC</th>
+						<th>balance after roll, mBTC</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ max.betAmount }} <small>(hm, {{ max.betAmountUser }} is a highroller)</small></td>
+						<td>{{ max.payout }} <small>(yeah, {{ max.payoutUser }} is a lucky guy)</small></td>
+						<td>{{ max.balance }} <small>(oh, {{ max.balanceUser }} is a rich man)</small></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class='row top-buffer'>
+			<div class='col-md-12'>
+				<h4>Rolls count by type</h4>
+				<highchart config="rollsByTypeConfig"></highchart>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-12'>
+				<h4>You spent here {{ spentTime | secondsToTime }}. <small>why?</small></h4>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
