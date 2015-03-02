@@ -31,7 +31,7 @@
 				<h4>Rolls online {{ rolls }}
 				<small ng-switch='showRollsGraph' ng-click='showRollsGraph = !showRollsGraph'>
 					(
-					<span ng-switch-when='true'>hide</span>
+					<span ng-switch-when='true'>hide {{ chartConfig.series[0].data.length }} rolls</span>
 					<span ng-switch-when='false'>show</span>
 					)
 				</small>

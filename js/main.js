@@ -74,6 +74,8 @@ app.controller('projectController', ['$scope', '$interval', 'socket', function($
                     lineColor: null,
                 }
             });
+
+            $scope.chartConfig.series[0].data.splice(0, $scope.chartConfig.series[0].data.length - 1000);
         }
 
 
