@@ -3,6 +3,8 @@
 <head>
 	<title>Fun pockerdice project</title>
 
+	<meta charset='UTF-8'>
+
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-socket-io/socket.js"></script>
 	<script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
@@ -21,6 +23,7 @@
 	</style>
 
 </head>
+<!-- Мама не учила, что подглядывать плохо? -->
 <body ng-app="project">
 	<div class="container" ng-controller="projectController">
 		<div class="page-header">
@@ -82,6 +85,26 @@
 						<td>{{ max.betAmount }} <small>(hm, {{ max.betAmountUser }} is a highroller)</small></td>
 						<td>{{ max.payout }} <small>(yeah, {{ max.payoutUser }} is a lucky guy)</small></td>
 						<td>{{ max.balance }} <small>(oh, {{ max.balanceUser }} is a rich man)</small></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class='row top-buffer'>
+			<div class='col-md-12'>
+				<table class='table'>
+					<caption>Average values</caption>
+					<tr>
+						<td>Avg</td>
+						<th>bet, mBTC</th>
+						<th>payout, mBTC</th>
+						<th>rolls per second</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td>{{ (wagered / rolls) | number:5 }}</td>
+						<td>{{ (payout / rolls) | number:5 }}</td>
+						<td>{{ (rolls / spentTime) | number:1 }}</td>
 					</tr>
 				</table>
 			</div>
